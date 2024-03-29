@@ -1,12 +1,15 @@
 // Test ID: IIDSAT
 
+import { useLoaderData } from "react-router";
+import { getOrder } from "../../services/apiRestaurant";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import { orderLoaderType } from "../../types/";
 
-const order = {
+const sample = {
   id: "ABCDEF",
   customer: "Jonas",
   phone: "123456789",
@@ -42,18 +45,21 @@ const order = {
 };
 
 function Order() {
+  const order = useLoaderData() as typeof sample;
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+
   const {
     id,
-    status,
+    // status,
     priority,
     priorityPrice,
     orderPrice,
     estimatedDelivery,
-    cart,
+    // cart,
   } = order;
-  const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
+  const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  id;
   return (
     <div>
       <div>
@@ -81,6 +87,12 @@ function Order() {
       </div>
     </div>
   );
+}
+
+export async function OrderLoader({ params }: orderLoaderType) {
+  const order = await getOrder(params.orderId);
+
+  return order;
 }
 
 export default Order;
