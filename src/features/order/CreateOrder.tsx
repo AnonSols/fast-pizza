@@ -91,7 +91,7 @@ function CreateOrder() {
 
 export async function action({ request }: { request: Request }) {
   const res = await request.formData();
-  const data: orderType = Object.fromEntries(res);
+  const data = Object.fromEntries(res) as orderType;
   // const formData: FormData<orderType> = new FormData(formEl);
   const order: orderType = {
     ...data,
