@@ -11,7 +11,12 @@ export type createOrderActionType = {
 export type orderType = {
   customer: string;
   address: string;
-  phone: number;
+  phone: string;
   cart: string;
   priority: boolean | string;
+};
+
+export type createActionErrors = {
+  phone?: string;
+  address?: string;
 };
