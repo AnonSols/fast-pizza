@@ -8,12 +8,14 @@ const AppLayout = () => {
   const isLoading = navigation.state === "loading";
 
   return (
-    <div className="grid h-screen grid-rows-[auto_1fr_auto] gap-8">
+    <div className="grid h-dscreen grid-rows-[auto_1fr_auto] ">
       {isLoading && <Loader />}
       <Header />
 
-      <main className="overflow-scroll w-20 bg-red-500">
-        <Outlet />
+      <main className="overflow-scroll px-4">
+        <div className="max-w-xl mx-auto sm:max-w-2xl md:max-3xl">
+          <Outlet />
+        </div>
       </main>
       <CartOverview />
     </div>
