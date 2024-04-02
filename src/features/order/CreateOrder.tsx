@@ -45,30 +45,57 @@ function CreateOrder() {
   const formErrors = useActionData() as createActionErrors;
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className=" py-6">
+      <h2 className="font-semibold text-xl mb-8 uppercase">
+        Ready to order? Let's go!
+      </h2>
       <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <input type="text" className="input" name="customer" required />
+        <div className="label">
+          <label className="" htmlFor="name">
+            First Name
+          </label>
+          <input
+            type="text"
+            className="input"
+            name="customer"
+            required
+            id="name"
+          />
         </div>
 
         <div>
-          <label>Phone number</label>
-          <div>
-            <input type="tel" name="phone" className="input" required />
+          <div className="label">
+            <label htmlFor="number">Phone number</label>
+
+            <input
+              type="tel"
+              id="number"
+              name="phone"
+              className="input"
+              required
+            />
           </div>
-          <p>{formErrors?.phone && `${formErrors.phone}`}</p>
+
+          {formErrors?.phone && (
+            <p className="text-red-400 mb-5 bg-red-100 uppercase p-2 font-semibold text-xs sm:text-sm ">
+              {formErrors.phone}
+            </p>
+          )}
         </div>
 
-        <div>
-          <label>Address</label>
-          <div>
-            <input type="text" className="input" name="address" required />
-          </div>
+        <div className="label">
+          <label htmlFor="address">Address</label>
+
+          <input
+            type="text"
+            id="address"
+            className="input"
+            name="address"
+            required
+          />
         </div>
 
-        <div>
+        <div className="flex items-center mb-6 gap-x-4 uppercase text-stone-800 font-semibold  md:text-lg">
           <input
             className="h-6 w-6 accent-yellow-400 focus:ring focus:ring-yellow-400 focus:ring-offset-2"
             type="checkbox"
@@ -77,7 +104,7 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label htmlFor="priority">Want to give your order priority?</label>
         </div>
 
         <div>
@@ -92,8 +119,8 @@ function CreateOrder() {
 }
 
 export async function action({ request }: { request: Request }) {
-  const res = await request.formData();
-  const data = Object.fromEntries(res) as orderType;
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData) as orderType;
 
   const order: orderType = {
     ...data,

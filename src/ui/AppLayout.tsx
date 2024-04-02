@@ -12,11 +12,12 @@ const AppLayout = () => {
       {isLoading && <Loader />}
       <Header />
 
-      <main className="overflow-scroll px-4">
+      <main className="overflow-y-scroll px-4">
         <div className="max-w-xl mx-auto sm:max-w-2xl md:max-3xl">
           <Outlet />
         </div>
       </main>
+
       <CartOverview />
     </div>
   );
