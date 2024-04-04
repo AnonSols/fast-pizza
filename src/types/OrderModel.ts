@@ -16,6 +16,17 @@ export type orderType = {
   priority: boolean | string;
 };
 
+export type orderItem = {
+  item: {
+    pizzaId: number;
+    name: string;
+    quantity: number;
+    totalPrice: number;
+  };
+  isLoadingIngredients?: boolean;
+  ingredients?: Array<string>;
+};
+
 export type createActionErrors = {
   phone?: string;
   address?: string;
