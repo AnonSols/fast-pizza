@@ -6,11 +6,13 @@ const Button = ({
   to,
   type,
   disabled,
+  action
 }: {
   children: ReactNode;
   disabled?: boolean;
   to?: string;
   type: "primary" | "small" | "secondary";
+  action?: () => void;
 }) => {
   const base =
     " bg-yellow-400 uppercase tracking-wide rounded-full font-semibold hover:bg-yellow-300 text-stone-800 transition-colors duration-300 focus:outline-none focus:ring focus:ring-yellow-300 focus:bg-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-slate-300 text-sm ";
@@ -29,8 +31,12 @@ const Button = ({
       </Link>
     );
 
+
+    function handleEvent() {
+      action?action():null
+    }
   return (
-    <button disabled={disabled} className={styles[type]}>
+    <button disabled={disabled} onClick = {handleEvent}className={styles[type]}>
       {children}
     </button>
   );

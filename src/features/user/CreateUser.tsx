@@ -1,11 +1,17 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import Button from "../../ui/Button";
+import { updateName } from "./userSlice";
+import { redirect } from "react-router";
 
 function CreateUser() {
   const [username, setUsername] = useState("");
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+  function handleSubmit() {
+    // e.preventDefault();
+
+    if (!username) return;
+    updateName(username);
+    redirect("/menu");
   }
 
   return (
@@ -24,7 +30,9 @@ function CreateUser() {
 
       {username !== "" && (
         <div>
-          <Button type="primary">Start ordering</Button>
+          <Button action={handleSubmit} type="primary">
+            Start ordering
+          </Button>
         </div>
       )}
     </form>
