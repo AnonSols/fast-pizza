@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from "../../ui/Button";
-import { updateName } from "./userSlice";
-import { redirect } from "react-router";
+import { useNavigate } from "react-router";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
+import { userCreators } from "../../types";
 
 function CreateUser() {
   const [username, setUsername] = useState("");
 
-  function handleSubmit() {
-    // e.preventDefault();
+  const dispatch = useDispatch();
+
+  const { updateName } = bindActionCreators(userCreators, dispatch);
+
+  const navigate = useNavigate();
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
 
     if (!username) return;
+    navigate("/menu");
     updateName(username);
-    redirect("/menu");
   }
 
   return (
@@ -30,9 +37,7 @@ function CreateUser() {
 
       {username !== "" && (
         <div>
-          <Button action={handleSubmit} type="primary">
-            Start ordering
-          </Button>
+          <Button type="primary">Start ordering</Button>
         </div>
       )}
     </form>

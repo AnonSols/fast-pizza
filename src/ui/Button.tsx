@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { FormEvent, ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 const Button = ({
@@ -6,7 +6,7 @@ const Button = ({
   to,
   type,
   disabled,
-  action
+  action,
 }: {
   children: ReactNode;
   disabled?: boolean;
@@ -31,12 +31,16 @@ const Button = ({
       </Link>
     );
 
-
-    function handleEvent() {
-      action?action():null
-    }
+  function handleEvent(e: FormEvent) {
+    e.preventDefault;
+    action ? action() : null;
+  }
   return (
-    <button disabled={disabled} onClick = {handleEvent}className={styles[type]}>
+    <button
+      disabled={disabled}
+      onClick={(e) => handleEvent(e)}
+      className={styles[type]}
+    >
       {children}
     </button>
   );
