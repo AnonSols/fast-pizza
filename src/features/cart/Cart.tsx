@@ -3,6 +3,9 @@ import Button from "../../ui/Button";
 import CartItem from "./CartItem";
 import { useSelector } from "react-redux";
 import { State } from "../../store";
+// import { bindActionCreators } from "@reduxjs/toolkit";
+// import { cartCreators } from "../../types";
+// import { addItem } from "./CartSlice";
 
 const fakeCart = [
   {
@@ -29,8 +32,11 @@ const fakeCart = [
 ];
 
 function Cart() {
-  const cart = fakeCart;
+  // const dispatch = useDispatch();
+  // const { addItem } = bindActionCreators(cartCreators, dispatch);
 
+  // console.log(addItem);
+  const cart = fakeCart;
   const userName = useSelector((state: State) => state.user.userName);
   return (
     <div className="pt-4">
