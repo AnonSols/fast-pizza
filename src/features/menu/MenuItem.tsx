@@ -7,21 +7,19 @@ import { bindActionCreators } from "@reduxjs/toolkit";
 
 function MenuItem({ pizza }: menuType) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  id;
 
   const dispatch = useDispatch();
   const { addItem } = bindActionCreators(cartCreators, dispatch);
 
   function handleAddItem() {
-    console.log("it's working");
     const data = {
-      pizzaId: 2,
-      name: "solomon",
-      quantity: 2,
-      unitPrice: 16,
+      pizzaId: id,
+      name: name,
+      quantity: 1,
+      unitPrice: unitPrice,
       totalPrice: 32,
     };
-    dispatch(addItem(data));
+    addItem(data);
   }
   return (
     <li className="flex gap-4 py-2">

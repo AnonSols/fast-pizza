@@ -15,3 +15,7 @@ export type stateProp = {
     totalPrice: number;
   }[];
 };
+
+export type cartItem = {
+  item: cartType;
+};
