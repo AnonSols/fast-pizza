@@ -1,6 +1,6 @@
 import { cartItem } from "../../types";
 import { formatCurrency } from "../../utils/helpers";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "../../ui/DeleteButton";
 
 function CartItem({ item }: cartItem) {
   const { pizzaId, name, quantity, totalPrice } = item;

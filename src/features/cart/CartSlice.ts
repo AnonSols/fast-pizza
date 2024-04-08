@@ -40,10 +40,12 @@ const cartSlice = createSlice({
 
 export const getTotalPrice = (state: State) =>
   state.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
-  export const getCart = (state: State) => state.cart.cart;
+export const getCart = (state: State) => state.cart.cart;
 export const getQuantity = (state: State) =>
   state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
 
+export const getCartQuantityById = (id: number) => (state: State) =>
+  state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;
 export const { addItem, removeItem, increaseQty, decreaseQty, clearCart } =
   cartSlice.actions;
 export default cartSlice.reducer;

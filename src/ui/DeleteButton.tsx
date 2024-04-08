@@ -1,7 +1,7 @@
 import { bindActionCreators } from "@reduxjs/toolkit";
-import Button from "../../ui/Button";
+import Button from "./Button";
 import { useDispatch } from "react-redux";
-import { cartCreators } from "../../types";
+import { cartCreators } from "../types";
 
 type buttonProp = {
   id: number;
