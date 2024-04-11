@@ -4,8 +4,9 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 // import { addItem } from "../cart/CartSlice";
 import { bindActionCreators } from "@reduxjs/toolkit";
-import DeleteButton from "../../ui/DeleteButton";
+import DeleteButton from "../cart/DeleteButton";
 import { getCartQuantityById } from "../cart/CartSlice";
+import ItemCounter from "../cart/ItemCounter";
 
 function MenuItem({ pizza }: menuType) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
@@ -51,13 +52,19 @@ function MenuItem({ pizza }: menuType) {
           )}
 
           {isInCart ? (
-            <DeleteButton id={id} />
+            <div className="flex gap-3 items-center">
+              <ItemCounter pizzaId={id} />
+              <DeleteButton id={id} />
+            </div>
           ) : (
             <>
               {!soldOut && (
-                <Button type="small" action={handleAddItem}>
-                  Add to cart
-                </Button>
+                <>
+                  {" "}
+                  <Button type="small" action={handleAddItem}>
+                    Add to cart
+                  </Button>
+                </>
               )}
             </>
           )}

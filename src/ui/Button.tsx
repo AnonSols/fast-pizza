@@ -11,7 +11,7 @@ const Button = ({
   children: ReactNode;
   disabled?: boolean;
   to?: string;
-  type: "primary" | "small" | "secondary";
+  type: "primary" | "small" | "secondary" | "round";
   action?: () => void;
 }) => {
   const base =
@@ -22,6 +22,7 @@ const Button = ({
     small: base + "py-2 px-3 md:px-5 md:py-2.5 font-bold text-xs",
     secondary:
       "border text-sm  border-stone-300 rounded-full font-semibold px-4 py-2.5 focus:bg-stone-200 text-stone-300 focus:outline-none focus:ring focus:ring-stone-200 focus:ring-offset-2 focus:border-none tracking-wide uppercase md:py-3.5 md:px-6 hover:bg-stone-300 hover:text-stone-800 focus:text-stone-800 my-6",
+    round: base + "px-2.5 py-1 md:px-3.5 md:py:2",
   };
 
   if (to)
