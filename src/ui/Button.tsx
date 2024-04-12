@@ -1,9 +1,10 @@
-import { FormEvent, ReactNode } from "react";
+import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 const Button = ({
   children,
   to,
+  location,
   type,
   disabled,
   action,
@@ -11,6 +12,7 @@ const Button = ({
   children: ReactNode;
   disabled?: boolean;
   to?: string;
+  location?: "location";
   type: "primary" | "small" | "secondary" | "round";
   action?: () => void;
 }) => {
@@ -32,16 +34,26 @@ const Button = ({
       </Link>
     );
 
-  function handleEvent(e: FormEvent) {
-    e.preventDefault;
+  function handleEvent() {
     action ? action() : null;
   }
+
+  if (location)
+    return (
+      <button
+        disabled={disabled}
+        onClick={(e) => {
+          e.preventDefault();
+
+          action ? action() : null;
+        }}
+        className={styles[type]}
+      >
+        {children}
+      </button>
+    );
   return (
-    <button
-      disabled={disabled}
-      onClick={(e) => handleEvent(e)}
-      className={styles[type]}
-    >
+    <button disabled={disabled} onClick={handleEvent} className={styles[type]}>
       {children}
     </button>
   );

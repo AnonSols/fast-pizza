@@ -65,7 +65,7 @@ function Order() {
   return (
     <div className="py-6 space-y-8">
       <div className="flex gap-2 items-center justify-between flex-wrap">
-        <h2 className="text-xl font-semibold">Order {id} Status</h2>
+        <h2 className="text-xl font-semibold">Order #{id} Status</h2>
 
         <div className="space-x-2">
           {priority && (

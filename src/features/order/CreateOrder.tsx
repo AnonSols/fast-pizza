@@ -1,13 +1,14 @@
 import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
-import { createActionErrors, orderType } from "../../types";
+import { createActionErrors, orderType, userCreators } from "../../types";
 import Button from "../../ui/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import store, { State } from "../../store";
 import { clearCart, getCart, getTotalPrice } from "../cart/CartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import { formatCurrency } from "../../utils/helpers";
 import { useState } from "react";
+import { bindActionCreators } from "@reduxjs/toolkit";
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str: string) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
@@ -20,13 +21,22 @@ function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
   const formErrors = useActionData() as createActionErrors;
-  const userName = useSelector((state: State) => state.user.userName);
+  const {
+    userName,
+    status: addressStatus,
+    address,
+    error,
+    position,
+  } = useSelector((state: State) => state.user);
 
   const totalCartPrice = useSelector(getTotalPrice);
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
 
+  const isLoadingAddress = addressStatus === "loading";
   const totalPrice = priorityPrice + totalCartPrice;
+  const dispatch = useDispatch();
 
+  const { fetchUserAddress } = bindActionCreators(userCreators, dispatch);
   if (!cart.length) return <EmptyCart />;
   return (
     <div className=" py-6">
@@ -68,16 +78,39 @@ function CreateOrder() {
           )}
         </div>
 
-        <div className="label">
+        <div className="label relative">
           <label htmlFor="address">Address</label>
 
-          <input
-            type="text"
-            id="address"
-            className="input"
-            name="address"
-            required
-          />
+          <div className="w-full flex gap-y-2 flex-col">
+            <input
+              type="text"
+              id="address"
+              className="input"
+              name="address"
+              disabled={isLoadingAddress ? true : false}
+              required
+              defaultValue={address}
+            />
+
+            {addressStatus === "error" && (
+              <p className="text-red-400 mb-5 bg-red-100 uppercase p-2 font-semibold text-xs sm:text-sm ">
+                {error}
+              </p>
+            )}
+          </div>
+
+          {!position.longitude && !position.latitude && (
+            <span className="absolute sm:right-[3.8px] sm:top-[6.7px] right-[3.8px] top-[21.7px] z-50">
+              <Button
+                disabled={isLoadingAddress}
+                type="small"
+                location="location"
+                action={fetchUserAddress}
+              >
+                Get Location
+              </Button>
+            </span>
+          )}
         </div>
 
         <div className="flex items-center mb-6 gap-x-4 uppercase text-stone-800 font-semibold  md:text-lg">
@@ -94,7 +127,16 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <Button type="primary" disabled={isSubmitting}>
+          <input
+            type="hidden"
+            name="position"
+            value={
+              position.latitude &&
+              position.longitude &&
+              `longitude: ${position.longitude}, latitude ${position.latitude}`
+            }
+          />
+          <Button type="primary" disabled={isSubmitting || isLoadingAddress}>
             {isSubmitting
               ? "Placing order...."
               : `Order now ${formatCurrency(totalPrice)}`}
