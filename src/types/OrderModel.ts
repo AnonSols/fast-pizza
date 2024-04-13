@@ -23,8 +23,8 @@ export type orderItem = {
     quantity: number;
     totalPrice: number;
   };
-  isLoadingIngredients?: boolean;
-  ingredients?: Array<string>;
+  isLoadingIngredients: boolean;
+  ingredients: Array<string>;
 };
 
 export type createActionErrors = {

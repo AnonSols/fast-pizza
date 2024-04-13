@@ -9,6 +9,9 @@ import {
 } from "../../utils/helpers";
 import { orderLoaderType } from "../../types/";
 import OrderItem from "./OrderItem";
+import { useFetcher } from "react-router-dom";
+import { useEffect } from "react";
+import UpdateOrder from "./UpdateOrder";
 
 const sample = {
   id: "ABCDEF",
@@ -48,8 +51,11 @@ const sample = {
 
 function Order() {
   const order = useLoaderData() as typeof sample;
-  // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+  const fetcher = useFetcher();
 
+  useEffect(() => {
+    if (!fetcher.data && fetcher.state === "idle") fetcher.load("/menu");
+  }, [fetcher]);
   const {
     id,
     status,
@@ -90,10 +96,19 @@ function Order() {
         </p>
       </div>
 
-      <ul>
-        {cart.map((item) => (
+      <ul className="divide-y border-t border-b border-stone-300">
+        {cart.map((item, _idx) => (
           <>
-            <OrderItem item={item} key={item.pizzaId} />
+            <OrderItem
+              item={item}
+              key={_idx}
+              isLoadingIngredients={fetcher.state === "loading"}
+              ingredients={
+                fetcher.data?.find(
+                  (data: { id: number }) => data.id === item.pizzaId
+                )?.ingredients ?? []
+              }
+            />
           </>
         ))}
       </ul>
@@ -110,6 +125,10 @@ function Order() {
         <p className="font-bold">
           To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
         </p>
+      </div>
+
+      <div>
+        <UpdateOrder />
       </div>
     </div>
   );

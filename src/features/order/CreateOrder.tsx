@@ -156,7 +156,6 @@ export async function action({ request }: { request: Request }) {
     priority: data.priority === "true",
     cart: JSON.parse(data.cart),
   };
-
   const errors = {} as createActionErrors;
 
   if (!isValidPhone(order.phone))
