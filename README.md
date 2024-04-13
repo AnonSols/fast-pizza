@@ -2,11 +2,13 @@
 
 Feel free to Contribute!
 
-git clone
-npm i
-npm run dev
+-git clone
 
-#####
+-npm i
+
+-npm run dev
+
+##### Enjoy the application!
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
