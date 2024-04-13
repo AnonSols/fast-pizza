@@ -4,7 +4,7 @@ export function formatCurrency(value: number) {
     currencyDisplay: "narrowSymbol",
     maximumSignificantDigits: 4,
     currency: "NGN",
-  }).format(value + 10000);
+  }).format(value);
 }
 
 export function formatDate(dateStr: string) {
