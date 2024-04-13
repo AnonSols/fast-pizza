@@ -4,7 +4,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { InitalStateProp, positionType } from "../../types";
+import { InitalStateProp, positionGeo, positionType } from "../../types";
 
 function getPosition() {
   return new Promise(function (resolve, reject) {
