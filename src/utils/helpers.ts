@@ -1,8 +1,10 @@
 export function formatCurrency(value: number) {
   return new Intl.NumberFormat("en", {
     style: "currency",
+    currencyDisplay: "narrowSymbol",
+    maximumSignificantDigits: 4,
     currency: "NGN",
-  }).format(value);
+  }).format(value + 10000);
 }
 
 export function formatDate(dateStr: string) {
